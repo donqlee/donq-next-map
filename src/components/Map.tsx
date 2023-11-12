@@ -25,12 +25,25 @@ export default function Map() {
 
       //식당 데이터 마커 띄우기
       stores?.["DATA"]?.map((store) => {
+        const imageSrc = store?.bizcnd_code_nm
+            ? `/images/markers/${store?.bizcnd_code_nm}.png`
+            : "images/markers/default.png",
+          imageSize = new window.kakao.maps.Size(40, 40),
+          imageOption = { offset: new window.kakao.maps.Point(27, 69) };
+
+        const markerImage = new window.kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        );
         const markerPosition = new window.kakao.maps.LatLng(
           store?.y_dnts,
           store?.x_cnts
         );
+
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
+          image: markerImage,
         });
         marker.setMap(map);
       });
